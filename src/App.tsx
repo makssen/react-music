@@ -1,25 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { routes } from './routes';
+import { DefaultLayout } from './components/DefaultLayout';
 import './App.css';
+import { MusicPage } from './pages';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <DefaultLayout>
+          <Switch>
+            {routes.map((item, i) => <Route key={i} path={item.path} exact={item.exact} component={item.component} />)}
+            <Route path="/music_page/:id" component={MusicPage} />
+            <Route path="*">
+              404 not found
+            </Route>
+          </Switch>
+        </DefaultLayout>
+      </BrowserRouter>
+    </>
   );
 }
 
